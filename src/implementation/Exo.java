@@ -17,7 +17,6 @@ public int compteurAppel;
 			this.compteurAppel=0;
 		this.compteurAppel++;
 		
-		System.out.println(m+" "+n+" "+i+" "+j);
 		
 		if(m==1 && n==1)
 			return 0;
@@ -91,9 +90,20 @@ public int compteurAppel;
 	 * @param j ordonnee case finale
 	 * @return valeur de la position (i,j)
 	 */
-	public int f(int m,int n,int i, int j)
+	public int f_naif(int m,int n,int i, int j)
 	{
 		return f(m,n,i,j,true);
+	}
+	
+	
+	public int f_dp_naif(int m,int n,int i,int j ,boolean resetCounter)
+	{
+		return 0;
+	}
+	
+	public int f_dp_naif(int m,int n,int i,int j)
+	{
+		return f_dp_naif(m,n,i,j,true);
 	}
 	
 }

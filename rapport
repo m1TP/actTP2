@@ -1,0 +1,7 @@
+
+
+version naive
+
+
+q3  f(10,7,7,5) => 13, avec  2,708,000 appels recursifs.
+	f(10,7,5,3) => pareil?
