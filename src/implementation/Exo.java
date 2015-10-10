@@ -11,6 +11,7 @@ public int compteurAppel;
 	}
 		
 	
+	//TODO factoriser les deux boucles?
 	private int f(int m,int n,int i,int j,boolean resetCounter)
 	{
 		if(resetCounter)
@@ -18,25 +19,30 @@ public int compteurAppel;
 		this.compteurAppel++;
 		
 		
+		
 		if(m==1 && n==1)
 			return 0;
 		
-		int tmpI,tmpJ,res =-1;
+		int tmpI,tmpJ,res,tmpM,tmpN = -1;
 		int maxNegativ = Integer.MIN_VALUE;
 		boolean hasNeg = false;
 		int maxPositiv = 0;
 		
+		res = 0;
 		for(int indice = 1; indice < m; indice++ )
 		{		
 			tmpI = i;
 			tmpJ = j;
+			tmpM = indice;
 			
 			if(i>= indice)
+			{
 				tmpI = i - indice;
-			if(j>= n)
-				tmpJ = j - n;
+				tmpM = m-indice;
+			}
 			
-			res = f(indice, n, tmpI, tmpJ,false);
+			//System.out.println(tmpM+" "+n+" "+tmpI+" "+tmpJ);
+			res = f(tmpM, n, tmpI, tmpJ,false);
 			
 			if (res<1)
 			{
@@ -51,13 +57,16 @@ public int compteurAppel;
 		{
 			tmpI = i;
 			tmpJ = j;
+			tmpN = indice;
 			
-			if(i>= m)
-				tmpI = i - m;
-			if(j>= n)
+			if(j>= indice)
+			{
 				tmpJ = j - indice;
+				tmpN = n - indice;
+			}
 			
-			res = f(m, indice, tmpI, tmpJ,false);
+			//System.out.println(m+" "+tmpN+" "+tmpI+" "+tmpJ);
+			res = f(m, tmpN, tmpI, tmpJ,false);
 			
 			if (res<1)
 			{
