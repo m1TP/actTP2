@@ -3,6 +3,7 @@ package main;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import util.Simulate4D;
 import implementation.Exo;
 
 public class Main {
@@ -19,11 +20,18 @@ public class Main {
 		
 		int res = exo.f_naif(m, n, 2, 2);
 		
+		res = exo.f_naif(10, 7, 7, 3);
+		System.out.println("res: "+ res+" en "+exo.compteurAppel+" appels récursifs");
+		
+		res = exo.f_naif(10, 7, 5, 3);
 		System.out.println("res: "+ res+" en "+exo.compteurAppel+" appels récursifs");
 		
 		for(int i=0;i<m;i++)
 			for(int j=0;j<n;j++)
-				System.out.println("res: "+exo.f_naif(m, n, i, j)+" en "+exo.compteurAppel+" appels récursifs") ;
+				;//System.out.println("res: "+exo.f_naif(m, n, i, j)+" en "+exo.compteurAppel+" appels récursifs") ;
+		
+		
+		System.out.println(Simulate4D.convert(100, 90, 45, 6, 1300, 1300, 1300));
 		
 		
 	}
