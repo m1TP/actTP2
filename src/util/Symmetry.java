@@ -113,4 +113,9 @@ public class Symmetry {
 	{
 		return this.m+" "+this.n+" "+this.i+" "+this.j;
 	}
+
+	public boolean equals(Symmetry s)
+	{
+		return (this.m==s.m && this.n==s.n && this.i==s.i && this.j==s.j);
+	}
 }
