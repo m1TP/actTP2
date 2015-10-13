@@ -33,8 +33,13 @@ public class Symmetry {
 			jj = this.i;
 		}
 		
-		Symmetry res = new Symmetry(mm,nn,ii,jj);
+		if(ii>(int)Math.ceil(mm/2))
+			ii = mm-1-ii;
+		if(jj>(int)Math.ceil(nn/2))
+			jj = nn-1-jj;
 		
+		Symmetry res = new Symmetry(mm,nn,ii,jj);
+		/*
 		for(int a=0;a<m;a++)
 			for(int b=0;b<n;b++)
 			{
@@ -49,7 +54,7 @@ public class Symmetry {
 						res.j=b;
 				}
 			}
-		
+		//*/
 		return res;
 		
 	}
