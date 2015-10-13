@@ -6,6 +6,7 @@ import java.util.HashMap;
 import util.Simulate4D;
 import util.Symmetry;
 import implementation.Exo;
+import implementation.Exo_v2;
 
 public class Main {
 
@@ -15,22 +16,25 @@ public class Main {
 	public static void main(String[] args) {
 
 		Exo exo = new Exo();
+		Exo_v2 exo2 = new Exo_v2();
 		
-		/*
 		int m = 7;
-		int n = 9;
-		int i = 6;
-		int j = 0;
+		int n = 3;
+		int i = 1;
+		int j = 1;
 		//*/
 		int res = 0;
 		
 		
 		
-		//res = exo.f_naif(m, n, i, j);
-		//System.out.println("res: "+ res+" en "+exo.compteurAppel+" appels récursifs");
+		res = exo.f_dp_naif(m, n, i, j);
+		System.out.println("res: "+ res+" en "+exo.compteurAppel+" appels récursifs");
+		
+		res = exo2.f_dp_naif(m, n, i, j);
+		System.out.println("res: "+ res+" en "+exo.compteurAppel+" appels récursifs");
 		
 		Symmetry s = null;
-		
+		/*
 		int tmpM=-1,tmpN=-1,tmpI=-1,tmpJ=-1;
 		for(int m=2;m<10;m++)
 			for(int n=2;n<10;n++)
