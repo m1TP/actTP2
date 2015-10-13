@@ -60,7 +60,7 @@ public class Exo_v2 {
 		boolean hasNeg = false;
 		int maxPositiv = 0;
 		
-		for(int indice=1;indice<Math.max(m, n);indice++)
+		for(int indice=1;indice<Math.max(m, n);indice++) //(O(m+n))
 		{
 			tmpI = i;
 			tmpJ = j;
@@ -75,21 +75,21 @@ public class Exo_v2 {
 					tmpM = m - indice;
 				}
 				
-				Symmetry s = new Symmetry(tmpM,n,tmpI,j);
+				Symmetry s = new Symmetry(tmpM,n,tmpI,j);  //couteux?
 				
 				if(dp)
 				{
 					if(symmetry)
-						s=s.normalizedSymmetry();
+						s=s.normalizedSymmetry(); //O(?)
 					
 					if(!tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)])
 					{
 						res1 = f(s.m, s.n, s.i, s.j,false,recursion_lvl+1,dp,symmetry);
-						tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]=res1;
-						tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]=true;
+						tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]=res1; //O(1) 
+						tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]=true; //O(1)
 					}
 					else
-						res1 = tabRes[Simulate4D.convert(s.m,s.n,s.i,s.j, m_initial, n_initial, m_initial)];
+						res1 = tabRes[Simulate4D.convert(s.m,s.n,s.i,s.j, m_initial, n_initial, m_initial)]; //O(1)
 				}
 				else
 					res1 = f(tmpM, n, tmpI, j,false,recursion_lvl+1,dp,symmetry);
@@ -97,7 +97,7 @@ public class Exo_v2 {
 				if (res1<1)
 				{
 					hasNeg = true;
-					maxNegativ = Math.max(maxNegativ, res1);
+					maxNegativ = Math.max(maxNegativ, res1); //O(1)
 				}
 				else
 					maxPositiv = Math.max(maxPositiv, res1);
@@ -170,8 +170,10 @@ public class Exo_v2 {
 		this.m_initial=m;
 		this.n_initial=n;
 		
-		tabChecked = new boolean[sizetab];
-		tabRes = new int[sizetab];
+		if(tabChecked==null || tabChecked.length!=sizetab)
+			tabChecked = new boolean[sizetab];
+		if(tabRes==null || tabRes.length!=sizetab)
+			tabRes = new int[sizetab];
 		
 		for(int a=0;a<sizetab;a++)
 		{

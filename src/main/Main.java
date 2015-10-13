@@ -18,21 +18,27 @@ public class Main {
 		Exo exo = new Exo();
 		Exo_v2 exo2 = new Exo_v2();
 		
-		int m = 7;
-		int n = 3;
-		int i = 1;
-		int j = 1;
+		int m = 20;
+		int n = 20;
+		int i = 15;
+		int j = 15;
 		//*/
 		int res = 0;
 		
 		
-		
-		res = exo.f_dp_naif(m, n, i, j);
-		System.out.println("res: "+ res+" en "+exo.compteurAppel+" appels récursifs");
+		long startTime = System.currentTimeMillis();
 		
 		res = exo2.f_dp_naif(m, n, i, j);
-		System.out.println("res: "+ res+" en "+exo.compteurAppel+" appels récursifs");
+		System.out.println("res: "+ res+" en "+exo2.compteurAppel+" appels récursifs");
 		
+		long endTime = System.currentTimeMillis();;
+		long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds
+		System.out.println(duration/1000+"s");
+		
+		res = exo2.f_dp_symmetry(m, n, i, j);
+		System.out.println("res: "+ res+" en "+exo2.compteurAppel+" appels récursifs");
+
+		//*/
 		Symmetry s = null;
 		/*
 		int tmpM=-1,tmpN=-1,tmpI=-1,tmpJ=-1;
@@ -42,12 +48,12 @@ public class Main {
 					for(int j=0;j<n;j++)
 					{
 						s = new Symmetry(m,n,i,j);
-						int res1 = exo.f_naif(s.m, s.n, s.i, s.j);
+						int res1 = exo.f_dp_naif(s.m, s.n, s.i, s.j);
 						
 						s =s.normalizedSymmetry();
-						int res2 = exo.f_naif(s.m, s.n, s.i, s.j);
+						int res2 = exo.f_dp_symmetry(s.m, s.n, s.i, s.j);
 						
-						System.out.println(res1+" "+res2);
+						//System.out.println(res1+" "+res2);
 						if(res1!=res2)
 						{
 							tmpM=m; tmpN=n; tmpI=i; tmpJ=j;
