@@ -154,10 +154,11 @@ public class Exo {
 			
 			//System.out.println(tmpM+" "+n+" "+tmpI+" "+tmpJ);
 			
-			if(tabRes[Simulate4D.convert(tmpM, n, tmpI, tmpJ, m_initial, n_initial, m_initial)]==0)
+			if(!tabChecked[Simulate4D.convert(tmpM, n, tmpI, tmpJ, m_initial, n_initial, m_initial)])
 			{
 				res = f_dp_naif(tmpM, n, tmpI, tmpJ,false);
 				tabRes[Simulate4D.convert(tmpM, n, tmpI, tmpJ, m_initial, n_initial, m_initial)]=res;
+				tabChecked[Simulate4D.convert(tmpM, n, tmpI, tmpJ, m_initial, n_initial, m_initial)]=true;
 			}
 			else
 				res = tabRes[Simulate4D.convert(tmpM, n, tmpI, tmpJ, m_initial, n_initial, m_initial)];
@@ -267,10 +268,11 @@ public class Exo {
 			
 			Symmetry s = new Symmetry(tmpM,n,tmpI,tmpJ);
 			s = s.normalizedSymmetry();
-			if(tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]==0)
+			if(!tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)])
 			{
 				res = f_dp_symmetry(s.m, s.n, s.i, s.j,false);
 				tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]=res;
+				tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]=true;
 			}
 			else
 				res = tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)];
@@ -299,10 +301,11 @@ public class Exo {
 			
 			Symmetry s = new Symmetry(m,tmpN,tmpI,tmpJ);
 			s = s.normalizedSymmetry();
-			if(tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]==0)
+			if(!tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)])
 			{
 				res = f_dp_symmetry(s.m, s.n, s.i, s.j,false);
 				tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]=res;
+				tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]=true;
 			}
 			else
 				res = tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)];
@@ -336,11 +339,16 @@ public class Exo {
 		this.m_initial=m;
 		this.n_initial=n;
 		
-		
+		tabChecked = new boolean[sizetab];
 		tabRes = new int[sizetab];
 		
 		for(int a=0;a<sizetab;a++)
+		{
 			tabRes[a]=0;
+			tabChecked[a]=false;
+		}
+		
+		tabChecked[Simulate4D.convert(1, 1, 0, 0, this.m_initial, this.n_initial, this.m_initial)]=true;
 		
 		return f_dp_symmetry(m,n,i,j,true);
 	}

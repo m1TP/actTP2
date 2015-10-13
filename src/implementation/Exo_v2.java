@@ -1,6 +1,7 @@
 package implementation;
 
 import util.Simulate4D;
+import util.Symmetry;
 
 public class Exo_v2 {
 
@@ -74,18 +75,24 @@ public class Exo_v2 {
 					tmpM = m - indice;
 				}
 				
+				Symmetry s = new Symmetry(tmpM,n,tmpI,j);
+				
 				if(dp)
 				{
-					if(tabRes[Simulate4D.convert(tmpM, n, tmpI, j, m_initial, n_initial, m_initial)]==0)
+					if(symmetry)
+						s=s.normalizedSymmetry();
+					
+					if(!tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)])
 					{
-						res1 = f(tmpM, n, tmpI, j,false,recursion_lvl+1,true,false);
-						tabRes[Simulate4D.convert(tmpM, n, tmpI, j, m_initial, n_initial, m_initial)]=res;
+						res1 = f(s.m, s.n, s.i, s.j,false,recursion_lvl+1,dp,symmetry);
+						tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]=res1;
+						tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]=true;
 					}
 					else
-						res1 = tabRes[Simulate4D.convert(tmpM, n, tmpI, j, m_initial, n_initial, m_initial)];
+						res1 = tabRes[Simulate4D.convert(s.m,s.n,s.i,s.j, m_initial, n_initial, m_initial)];
 				}
 				else
-					res1 = f(tmpM, n, tmpI, j,false,recursion_lvl+1,false,false);
+					res1 = f(tmpM, n, tmpI, j,false,recursion_lvl+1,dp,symmetry);
 				
 				if (res1<1)
 				{
@@ -104,18 +111,24 @@ public class Exo_v2 {
 					tmpN = n - indice;
 				}
 				
+				Symmetry s = new Symmetry(m,tmpN,i,tmpJ);
+				
 				if(dp)
 				{
-					if(tabRes[Simulate4D.convert(m, tmpN, i, tmpJ, m_initial, n_initial, m_initial)]==0)
+					if(symmetry)
+						s=s.normalizedSymmetry();
+					
+					if(!tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)])
 					{
-						res = f(m, tmpN, i, tmpJ,false,recursion_lvl+1,true,false);
-						tabRes[Simulate4D.convert(m, tmpN, i, tmpJ, m_initial, n_initial, m_initial)]=res;
+						res2 = f(s.m, s.n, s.i, s.j,false,recursion_lvl+1,dp,symmetry);
+						tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]=res2;
+						tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]=true;
 					}
 					else
-						res = tabRes[Simulate4D.convert(m, tmpN, i, tmpJ, m_initial, n_initial, m_initial)];
+						res2 = tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)];
 				}
 				else
-					res2 = f(m, tmpN, i, tmpJ,false,recursion_lvl+1,false,false);
+					res2 = f(s.m, s.n, s.i, s.j,false,recursion_lvl+1,dp,symmetry);
 				
 				if (res2<1)
 				{
@@ -126,7 +139,8 @@ public class Exo_v2 {
 					maxPositiv = Math.max(maxPositiv, res2);
 			}
 		}
-			
+		
+	
 		if (hasNeg)
 			res = maxNegativ-1;
 		else
@@ -150,7 +164,7 @@ public class Exo_v2 {
 		return f(m,n,i,j,true,0,false,false);
 	}
 	
-	public int f_dp_naif(int m,int n,int i,int j)
+	public int f_dp(int m,int n,int i,int j,boolean symmetry)
 	{
 		int sizetab = m+m*n+m*n*m+m*n*m*n;
 		this.m_initial=m;
@@ -166,7 +180,17 @@ public class Exo_v2 {
 		}
 		tabChecked[Simulate4D.convert(1, 1, 0, 0, this.m_initial, this.n_initial, this.m_initial)]=true;
 		
-		return f(m,n,i,j,true,0,true,false);
+		return f(m,n,i,j,true,0,true,symmetry);
+	}
+	
+	public int f_dp_naif(int m,int n,int i,int j)
+	{
+		return f_dp(m,n,i,j,false);
+	}
+	
+	public int f_dp_symmetry(int m,int n,int i,int j)
+	{
+		return f_dp(m,n,i,j,true);
 	}
 	
 }
