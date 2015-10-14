@@ -51,15 +51,17 @@ public class Exo_v2 {
 		if(m==1 && n==1)
 			return 0;
 		
-		int res=0,res1=0,res2=0;
-		int tmpI= -1;
+		int res=0,res1=0,res2=0; //stockage des res deu decoupage horizontal et vertical, et resultat final
+		int tmpI= -1;            
 		int tmpJ= -1;
 		int tmpM= -1;
 		int tmpN= -1;
-		int maxNegativ = Integer.MIN_VALUE;
+		int maxNegativ = Integer.MIN_VALUE; //entier servant a stocker le mininmum
 		boolean hasNeg = false;
 		int maxPositiv = 0;
 		Symmetry s = new Symmetry(1,1,0,0);
+		
+		
 		
 		for(int indice=1;indice<Math.max(m, n);indice++) //(O(m+n))
 		{
@@ -175,10 +177,9 @@ public class Exo_v2 {
 			System.out.println(s);
 			int mm = (s.m);
 			int nn = (s.n);
-			sizetab = mm+nn+(mm + mm*nn + mm*nn*mm + mm*nn*mm*nn)/2;
-			System.out.println("sizetab:"+sizetab);
+			sizetab = (mm + mm*nn + mm*nn*mm + mm*nn*mm*nn)/2;
 		}
-		
+		System.out.println("sizetab:"+sizetab);
 		if(tabChecked==null || tabChecked.length!=sizetab)
 			tabChecked = new boolean[sizetab];
 		if(tabRes==null || tabRes.length!=sizetab)
@@ -190,6 +191,9 @@ public class Exo_v2 {
 			tabChecked[a]=false;
 		}
 		tabChecked[Simulate4D.convert(1, 1, 0, 0, this.m_initial, this.n_initial, this.m_initial)]=true;
+		
+		if(symmetry)
+			return fprime(s.m,s.n,s.i,s.j,true,0);
 		
 		return f(s.m,s.n,s.i,s.j,true,0,true,symmetry);
 	}
@@ -206,12 +210,131 @@ public class Exo_v2 {
 	
 	public int f_dp_symmetry(int m,int n,int i,int j)
 	{
-		int res = f_dp(m,n,i,j,true);
+		Symmetry s = new Symmetry(m,n,i,j);
+		s.normalizedSymmetry();
+		int res = f_dp(s.m,s.n,s.i,s.j,true);
 		int count = 0;
 		for(int p : tabRes)
 			count = (p!=0) ? count+1 : count;
 		System.out.println(count+" "+tabRes.length+" "+(float)tabRes.length/count);
 		return res;
 	}
+	
+	
+	public int fprime(int m,int n,int i,int j,boolean resetCounter, int recursion_lvl)
+	{
+		if(resetCounter)
+			this.compteurAppel=0;
+		this.compteurAppel++;
+		
+		if(this.DEBUG)
+		{
+			for(int z=0;z<recursion_lvl;z++)
+				System.out.print("-");	
+			System.out.println(m+" "+n+" "+i+" "+j+" entry");
+		}
+		
+		if(m==1 && n==1)
+			return 0;
+		
+		int res=0,res1=0,res2=0; //stockage des res deu decoupage horizontal et vertical, et resultat final
+		int tmpI= -1;            
+		int tmpJ= -1;
+		int tmpM= -1;
+		int tmpN= -1;
+		int maxNegativ = Integer.MIN_VALUE; //entier servant a stocker le mininmum
+		boolean hasNeg = false;
+		int maxPositiv = 0;
+		Symmetry s = new Symmetry(1,1,0,0);
+		
+		int indiceMaxM = m;
+		if (indiceMaxM>2)
+			indiceMaxM--;
+			
+		for(int indice=1;indice<m;indice++) //(O(m+n))
+		{
+			tmpI = i;
+			tmpM = indice;
+			
+			if(i>= indice){	
+				tmpI = i - indice;
+				tmpM = m - indice;
+			}
+			
+			s.setSymmetry(tmpM,n,tmpI,j);  //couteux?
+			s.normalizedSymmetry(); //O(?)
+			
+			if(!tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)])
+			{
+				res1 = fprime(s.m, s.n, s.i, s.j,false,recursion_lvl+1);
+				tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]=res1; //O(1) 
+				tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]=true; //O(1)
+			}
+			else
+				res1 = tabRes[Simulate4D.convert(s.m,s.n,s.i,s.j, m_initial, n_initial, m_initial)]; //O(1)
+			
+			if (res1<1)
+			{
+				hasNeg = true;
+				maxNegativ = Math.max(maxNegativ, res1); //O(1)
+			}
+			else
+				maxPositiv = Math.max(maxPositiv, res1);
+			
+		}
+		
+		for(int indice=1;indice<n;indice++) //(O(m+n))
+		{
+			tmpJ = j;
+			tmpN = indice;
+			
+			
+			if(j>= indice)
+			{
+				tmpJ = j - indice;
+				tmpN = n - indice;
+			}
+			
+			s.setSymmetry(m,tmpN,i,tmpJ);
+			s.normalizedSymmetry();
+			
+			if(!tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)])
+			{
+				res2 = fprime(s.m, s.n, s.i, s.j,false,recursion_lvl+1);
+				tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]=res2;
+				tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]=true;
+			}
+			else
+				res2 = tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)];
+			
+			
+			if (res2<1)
+			{
+				hasNeg = true;
+				maxNegativ = Math.max(maxNegativ, res2);
+			}
+			else
+				maxPositiv = Math.max(maxPositiv, res2);
+		}
+		
+	
+		if (hasNeg)
+			res = maxNegativ-1;
+		else
+			res = maxPositiv+1;
+		
+		if(this.DEBUG)
+		{
+			for(int z=0;z<recursion_lvl;z++)
+				System.out.print("%");
+			if (hasNeg)
+				System.out.println(maxNegativ+" "+(-res));
+			else
+				System.out.println(maxPositiv+" "+(-res));
+		}
+		//*/
+		return -res;
+	}
+	
 	
 }
