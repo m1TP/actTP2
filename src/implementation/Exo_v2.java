@@ -251,7 +251,7 @@ public class Exo_v2 {
 		if (indiceMaxM>2)
 			indiceMaxM--;
 			
-		for(int indice=1;indice<m;indice++) //(O(m+n))
+		for(int indice=1;indice<indiceMaxM;indice++) //(O(m+n))
 		{
 			tmpI = i;
 			tmpM = indice;
