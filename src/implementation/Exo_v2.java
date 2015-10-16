@@ -60,6 +60,7 @@ public class Exo_v2 {
 		boolean hasNeg = false;
 		int maxPositiv = 0;
 		
+		
 		for(int indice=1;indice<Math.max(m, n);indice++) //(O(m+n))
 		{
 			tmpI = i;
@@ -75,12 +76,12 @@ public class Exo_v2 {
 					tmpM = m - indice;
 				}
 				
-				Symmetry s = new Symmetry(tmpM,n,tmpI,j);  //couteux?
+				Symmetry s = new Symmetry(tmpM,n,tmpI,j);  
 				
 				if(dp)
 				{
 					if(symmetry)
-						s=s.normalizedSymmetry(); //O(?)
+						s=s.normalizedSymmetry(); //O(1)
 					
 					if(!tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)])
 					{
@@ -92,7 +93,7 @@ public class Exo_v2 {
 						res1 = tabRes[Simulate4D.convert(s.m,s.n,s.i,s.j, m_initial, n_initial, m_initial)]; //O(1)
 				}
 				else
-					res1 = f(tmpM, n, tmpI, j,false,recursion_lvl+1,dp,symmetry);
+					res1 = f(s.m, s.n, s.i, s.j,false,recursion_lvl+1,dp,symmetry);
 				
 				if (res1<1)
 				{

@@ -59,6 +59,13 @@ public class Symmetry {
 		
 	}
 
+	public void setSymmetry(int m, int n, int i, int j) {
+		this.m = m;
+		this.n = n;
+		this.i = i;
+		this.j = j;
+	}
+	
 	public boolean isSymmetry(int m, int n, int i, int j)
 	{
 		
@@ -123,4 +130,6 @@ public class Symmetry {
 	{
 		return (this.m==s.m && this.n==s.n && this.i==s.i && this.j==s.j);
 	}
+
+	
 }
