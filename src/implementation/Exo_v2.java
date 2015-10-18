@@ -227,6 +227,11 @@ public class Exo_v2 {
 			this.compteurAppel=0;
 		this.compteurAppel++;
 		
+		
+		for(int z=0;z<recursion_lvl;z++)
+			System.out.print("-");	
+		System.out.println(m+" "+n+" "+i+" "+j+" entry");
+		
 		if(this.DEBUG)
 		{
 			for(int z=0;z<recursion_lvl;z++)
@@ -249,9 +254,9 @@ public class Exo_v2 {
 		
 		int indiceMaxM = m;
 		if (indiceMaxM>2)
-			indiceMaxM--;
+			indiceMaxM+=-1;
 			
-		for(int indice=1;indice<m;indice++) //(O(m+n))
+		for(int indice=1;indice<indiceMaxM;indice++) //(O(m+n))
 		{
 			tmpI = i;
 			tmpM = indice;
@@ -262,7 +267,7 @@ public class Exo_v2 {
 			}
 			
 			s.setSymmetry(tmpM,n,tmpI,j);  //couteux?
-			s.normalizedSymmetry(); //O(?)
+			//s.normalizedSymmetry(); //O(?)
 			
 			if(!tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)])
 			{
@@ -296,7 +301,7 @@ public class Exo_v2 {
 			}
 			
 			s.setSymmetry(m,tmpN,i,tmpJ);
-			s.normalizedSymmetry();
+			//s.normalizedSymmetry();
 			
 			if(!tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)])
 			{
