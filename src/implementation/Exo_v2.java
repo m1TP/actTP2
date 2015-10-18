@@ -61,6 +61,7 @@ public class Exo_v2 {
 		int maxPositiv = 0;
 		Symmetry s = new Symmetry(1,1,0,0);
 		
+		
 		for(int indice=1;indice<Math.max(m, n);indice++) //(O(m+n))
 		{
 			tmpI = i;
@@ -73,12 +74,14 @@ public class Exo_v2 {
 					tmpM = m - indice;
 				}
 				
+
 				s.setSymmetry(tmpM,n,tmpI,j);  //couteux?
 
 				if(dp){
 					if(symmetry){
 						s.normalizedSymmetry(); //O(?)
 					}
+
 					
 					if(!tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)])
 					{

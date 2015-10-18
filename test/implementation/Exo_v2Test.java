@@ -2,15 +2,13 @@ package implementation;
 
 import static org.junit.Assert.*;
 
-
 import org.junit.Test;
 
-public class ExoTest {
+public class Exo_v2Test {
 
 	@Test
 	public void testF_naif() {
-		Exo exo = new Exo();
-		
+		Exo_v2 exo = new Exo_v2();
 		int res = exo.f_naif(1, 1, 0, 0);
 		assertEquals(res,0);
 		
@@ -87,13 +85,11 @@ public class ExoTest {
 		
 		res = exo.f_naif(2, 3, 1, 2);
 		assertEquals(res,3);
-		
 	}
 
-	
 	@Test
 	public void testF_dp_naif() {
-		Exo exo = new Exo();
+		Exo_v2 exo = new Exo_v2();
 		
 		int res = exo.f_dp_naif(1, 1, 0, 0);
 		assertEquals(res,0);
@@ -174,8 +170,9 @@ public class ExoTest {
 	}
 
 	@Test
-	public void testF_dp_symmetry() {
-		Exo exo = new Exo();
+	public void testF_dp_symmetry()
+	{
+		Exo_v2 exo = new Exo_v2();
 		
 		int res = exo.f_dp_symmetry(1, 1, 0, 0);
 		assertEquals(res,0);
@@ -254,5 +251,4 @@ public class ExoTest {
 		res = exo.f_dp_symmetry(2, 3, 1, 2);
 		assertEquals(res,3);
 	}
-
 }
