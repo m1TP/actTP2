@@ -18,13 +18,16 @@ public class Main {
 		Exo exo = new Exo();
 		Exo_v2 exo2 = new Exo_v2();
 		
-		int m = 20;
-		int n = 20;
-		int i = 15;
-		int j = 15;
+		int m = 3;
+		int n = 3;
+		int i = 0;
+		int j = 0;
 		//*/
 		int res = 0;
 		
+		
+		//res = exo2.f_naif(m, n, i, j);
+		//System.out.println("res: "+ res+" en "+exo2.compteurAppel+" appels récursifs");
 		
 		long startTime = System.currentTimeMillis();
 		
@@ -32,15 +35,21 @@ public class Main {
 		System.out.println("res: "+ res+" en "+exo2.compteurAppel+" appels récursifs");
 		
 		long endTime = System.currentTimeMillis();;
-		long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds
-		System.out.println(duration/1000+"s");
+		long duration = (endTime - startTime);  
+		System.out.println((float)duration/1000+"s");
 		
+		
+		startTime = System.currentTimeMillis();
 		res = exo2.f_dp_symmetry(m, n, i, j);
 		System.out.println("res: "+ res+" en "+exo2.compteurAppel+" appels récursifs");
-
+		endTime = System.currentTimeMillis();;
+		duration = (endTime - startTime);  //divide by 1000000 to get milliseconds
+		System.out.println((float)duration/1000+"s");
 		//*/
-		Symmetry s = null;
 		/*
+		System.out.println(exo2.f_dp_naif(2, 5, 0, 1));
+		Symmetry s = null;
+		
 		int tmpM=-1,tmpN=-1,tmpI=-1,tmpJ=-1;
 		for(int m=2;m<10;m++)
 			for(int n=2;n<10;n++)
@@ -50,16 +59,16 @@ public class Main {
 						s = new Symmetry(m,n,i,j);
 						int res1 = exo.f_dp_naif(s.m, s.n, s.i, s.j);
 						
-						s =s.normalizedSymmetry();
-						int res2 = exo.f_dp_symmetry(s.m, s.n, s.i, s.j);
+						//int res2 = exo.f_dp_symmetry(s.m, s.n, s.i, s.j);
 						
-						//System.out.println(res1+" "+res2);
+						/*System.out.println(res1+" "+res2);
 						if(res1!=res2)
 						{
 							tmpM=m; tmpN=n; tmpI=i; tmpJ=j;
-							System.out.println(new Symmetry(m,n,i,j));
+							System.out.println(s+" "+res1);
 							break;
-						}
+						}//*//*
+						System.out.println(s+" "+res1);
 					}
 		System.out.println(new Symmetry(tmpM,tmpN,tmpI,tmpJ));
 		//*/

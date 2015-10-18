@@ -13,12 +13,28 @@ public class Symmetry {
 
 	}
 	
+	//same as constructor, but dont reallocate memory
+	public void setSymmetry(int m,int n,int i,int j)
+	{
+		this.m=m;
+		this.n=n;
+		this.i=i;
+		this.j=j;
+	}
+	
+	public void setSymmetry(Symmetry s)
+	{
+		this.m=s.m;
+		this.n=s.n;
+		this.i=s.i;
+		this.j=s.j;
+	}
+	
 	/**
-	 * produce every symmetry for a quadruplet given, an return the one that is normalized.
-	 * ie we keep m and n such as m>n if m!=n ans such as i be the minimum, and then j minimum.
+	 * find a form that is on the upper left corner of the array
 	 * 
 	 */
-	public Symmetry normalizedSymmetry()
+	public void normalizedSymmetry()
 	{
 		int mm = this.m;
 		int nn = this.n;
@@ -33,30 +49,15 @@ public class Symmetry {
 			jj = this.i;
 		}
 		
-		if(ii>(int)Math.ceil(mm/2))
+		//on profite du fait que la division des entiers en java retourn un entier
+		//cela evite d'utiliser Math.ceil(), très couteux
+		
+		if(ii>=mm/2)
 			ii = mm-1-ii;
-		if(jj>(int)Math.ceil(nn/2))
+		if(jj>=nn/2)
 			jj = nn-1-jj;
-		
-		Symmetry res = new Symmetry(mm,nn,ii,jj);
-		/*
-		for(int a=0;a<m;a++)
-			for(int b=0;b<n;b++)
-			{
-				if(res.isSymmetry(res.m, res.n, a, b))
-				{
-					if (a<res.i)
-					{
-						res.i = a;
-						res.j = b;
-					}
-					else if (a==res.i && b<res.j)
-						res.j=b;
-				}
-			}
-		//*/
-		return res;
-		
+		setSymmetry(mm,nn,ii,jj);
+
 	}
 
 	public boolean isSymmetry(int m, int n, int i, int j)
