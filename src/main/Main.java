@@ -31,15 +31,16 @@ public class Main {
 		
 		long startTime = System.currentTimeMillis();
 		
-		res = exo2.f_dp_symmetry(m, n, i, j);
+		res = exo2.f_dp_naif(m, n, i, j);
 		System.out.println("res: "+ res+" en "+exo2.compteurAppel+" appels récursifs");
 		
 		long endTime = System.currentTimeMillis();;
 		long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds
 		System.out.println((float)duration/1000+"s");
 		
+		
 		startTime = System.currentTimeMillis();
-		res = exo2.f_dp_naif(m, n, i, j);
+		res = exo2.f_dp_symmetry(m, n, i, j);
 		System.out.println("res: "+ res+" en "+exo2.compteurAppel+" appels récursifs");
 
 		endTime = System.currentTimeMillis();;
