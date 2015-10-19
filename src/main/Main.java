@@ -22,10 +22,10 @@ public class Main {
 		Exo_v2 exo2 = new Exo_v2();
 		
 
-		int m = 100;
-		int n = 100;
-		int i = 48;
-		int j = 52;
+		int m = 5;
+		int n = 2;
+		int i = 2;
+		int j = 1;
 
 		//*/
 		int res = 0;
@@ -55,7 +55,7 @@ public class Main {
 		
 		
 		startTime = System.currentTimeMillis();
-		res = exo2.f_dp_naif(m, n, i, j);
+		res = exo2.f_naif(m, n, i, j);
 		System.out.println("res: "+ res+" en "+exo2.compteurAppel+" appels récursifs");
 
 		endTime = System.currentTimeMillis();;
