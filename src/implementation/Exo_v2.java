@@ -45,7 +45,7 @@ public class Exo_v2 {
 		{
 			for(int z=0;z<recursion_lvl;z++)
 				System.out.print("-");	
-			System.out.println(m+" "+n+" "+i+" "+j);
+			System.out.println(m+" "+n+" "+i+" "+j+" entry");
 		}
 		
 		if(m==1 && n==1)
@@ -59,6 +59,7 @@ public class Exo_v2 {
 		int maxNegativ = Integer.MIN_VALUE;
 		boolean hasNeg = false;
 		int maxPositiv = 0;
+		Symmetry s = new Symmetry(1,1,0,0);
 		
 		
 		for(int indice=1;indice<Math.max(m, n);indice++) //(O(m+n))
@@ -67,21 +68,20 @@ public class Exo_v2 {
 			tmpJ = j;
 			tmpM = indice;
 			tmpN = indice;
-			
-			if(indice<m)
-			{
-				if(i>= indice)
-				{
+			if(indice<m){
+				if(i>= indice){	
 					tmpI = i - indice;
 					tmpM = m - indice;
 				}
 				
-				Symmetry s = new Symmetry(tmpM,n,tmpI,j);  
-				
-				if(dp)
-				{
-					if(symmetry)
-						s=s.normalizedSymmetry(); //O(1)
+
+				s.setSymmetry(tmpM,n,tmpI,j);  //couteux?
+
+				if(dp){
+					if(symmetry){
+						s.normalizedSymmetry(); //O(?)
+					}
+
 					
 					if(!tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)])
 					{
@@ -112,12 +112,12 @@ public class Exo_v2 {
 					tmpN = n - indice;
 				}
 				
-				Symmetry s = new Symmetry(m,tmpN,i,tmpJ);
+				s.setSymmetry(m,tmpN,i,tmpJ);
 				
 				if(dp)
 				{
 					if(symmetry)
-						s=s.normalizedSymmetry();
+						s.normalizedSymmetry();
 					
 					if(!tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)])
 					{
@@ -171,6 +171,17 @@ public class Exo_v2 {
 		this.m_initial=m;
 		this.n_initial=n;
 		
+		Symmetry s = new Symmetry(m,n,i,j);
+		
+		if(symmetry){
+			s.normalizedSymmetry();
+			System.out.println(s);
+			int mm = (s.m);
+			int nn = (s.n);
+			sizetab = mm+nn+(mm + mm*nn + mm*nn*mm + mm*nn*mm*nn)/2;
+			System.out.println("sizetab:"+sizetab);
+		}
+		
 		if(tabChecked==null || tabChecked.length!=sizetab)
 			tabChecked = new boolean[sizetab];
 		if(tabRes==null || tabRes.length!=sizetab)
@@ -183,17 +194,27 @@ public class Exo_v2 {
 		}
 		tabChecked[Simulate4D.convert(1, 1, 0, 0, this.m_initial, this.n_initial, this.m_initial)]=true;
 		
-		return f(m,n,i,j,true,0,true,symmetry);
+		return f(s.m,s.n,s.i,s.j,true,0,true,symmetry);
 	}
 	
 	public int f_dp_naif(int m,int n,int i,int j)
 	{
-		return f_dp(m,n,i,j,false);
+		int res = f_dp(m,n,i,j,false);
+		int count = 0;
+		for(int p : tabRes)
+			count = (p!=0) ? count+1 : count;
+		System.out.println(count+" "+tabRes.length+" "+(float)tabRes.length/count);
+		return res;
 	}
 	
 	public int f_dp_symmetry(int m,int n,int i,int j)
 	{
-		return f_dp(m,n,i,j,true);
+		int res = f_dp(m,n,i,j,true);
+		int count = 0;
+		for(int p : tabRes)
+			count = (p!=0) ? count+1 : count;
+		System.out.println(count+" "+tabRes.length+" "+(float)tabRes.length/count);
+		return res;
 	}
 	
 }
