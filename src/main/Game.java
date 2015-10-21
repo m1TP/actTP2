@@ -2,7 +2,6 @@ package main;
 
 import java.util.Random;
 import java.util.Scanner;
-
 import implementation.Exo_v2;
 
 public class Game {
@@ -67,34 +66,119 @@ public class Game {
 		
 		System.out.println("C'est l'heure du duel !\n");
 		int res;
-		
-		
-		
+		boolean joueur=true;
+		String joueur1 = "Joueur 1";
+		String joueur2 = "Joueur 2";
+		String joueurActuel = "";
 		
 		
 		//Deroulement de la partie
-		//while(m!=1 && n!=1){
-			System.out.println("Représentation du plateau de jeu");
-			for(int k=0;k<m;k++){
-				for(int l=0;l<n;l++)
-					if(l==i && k==j)
-						System.out.print("[X]");
-					else
-						System.out.print("[ ]");
-				System.out.println("");
-			}
+		while(m>1 || n>1){
 			
-			System.out.println("Joueur 1 joue ...");
-			res = exo2.f_dp(m, n, i, j, true);
+			System.out.println("Représentation du plateau de jeu");
+			representationPlateau(m,n,i,j);
+			
+			if(joueur)
+				joueurActuel=joueur1;
+			else
+				joueurActuel=joueur2;
+
+			System.out.println("\n"+joueurActuel+" joue ...");
+			res = exo2.f_dp(m, n, i, j,true);
+			
+			
+			
 			
 			if(res>0){//Gagnant
-				System.out.println("Le joueur 1 peut gagner en "+res+" coupes");
+				System.out.println("Configuration optimal : Le "+joueurActuel+" peut gagner en "+res+" coupes");
 			}else{//Perdant
-				System.out.println("Le joueur 1 va perdre en "+res+" coupes");
+				System.out.println("Configuration optimal : Le "+joueurActuel+" va perdre en "+res+" coupes");
 			}
 			
-	//}
+			
+			
+			
+			System.out.println("Coupe a faire en longueur ou largueur (long/larg) ?");
+			String tmpLine = "";
+			int tmpNum = 0;
+			scan = new Scanner(System.in);
+			boolean longueur = false;
+			boolean largueur = false;
+			
+			while( !longueur && !largueur )
+				if(tmpLine.equals("long")){
+					longueur=true;
+				}else if(tmpLine.equals("larg"))
+					largueur=true;
+				else
+					tmpLine=scan.nextLine();
+				
+			
+			if(longueur){
+				System.out.println("Couper à partir de la colonne (inclu) :");
+				while(tmpNum<=0 || tmpNum>=m){
+					if(scan.hasNextInt() && (tmpNum=scan.nextInt()) > 0){
+						if(tmpNum < m)
+							System.out.println("On coupe ...");
+						else{
+							System.out.println("Indiquez un entier supérieur à 0 ... et inférieur à la longueur du tableau actuel "+m);
+						}
+					}else{
+						System.out.println("Indiquez un entier supérieur à 0 ... et inférieur à la longueur du tableau actuel "+m);
+					}
+				}
+			}else{
+				System.out.println("Couper à partir de la ligne (inclu) :");
+				while(tmpNum<=0 || tmpNum>=n){
+					if(scan.hasNextInt() && (tmpNum=scan.nextInt()) > 0){
+						if(tmpNum < n)
+							System.out.println("On coupe ...");
+						else{
+							System.out.println("Indiquez un entier supérieur à 0 ... et inférieur à la largueur du tableau actuel "+n);
+						}
+					}else{
+						System.out.println("Indiquez un entier supérieur à 0 ... et inférieur à la largueur du tableau actuel "+n);
+					}
+				}
+			}
+			
+			
+			if(longueur){
+				if(tmpNum<=i){//Coupe a gauche
+					System.out.println("Coupe a gauche");
+					m=m-tmpNum;
+					i=i-tmpNum;
+				}else{//Coupe a droite
+					System.out.println("Coupe a droite");
+					m=tmpNum;
+				}
+			}else{
+				if(tmpNum<=j){//Coupe en haut
+					n=n-tmpNum;
+					j=j-tmpNum;
+				}else{//Coupe en bas
+					n=tmpNum;
+				}				
+			}
+			
+			System.out.println("Coupe terminé ... à l'adversaire ...");
+			joueur=!joueur;
+			
+		}
+		
+		System.out.println("\n Félicitation le "+joueurActuel+" a gagné !");
 		
 		
+	}
+	
+	public static void representationPlateau(int m, int n, int i, int j){
+		for(int k=0;k<n;k++){
+			for(int l=0;l<m;l++)
+				if(l==i && k==j)
+					System.out.print("[X]");
+				else
+					System.out.print("[ ]");
+			System.out.println("");
+		}
 	}
 }
