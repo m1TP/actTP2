@@ -23,9 +23,9 @@ public class Main {
 		
 
 		int m = 5;
-		int n = 2;
-		int i = 2;
-		int j = 1;
+		int n = 4;
+		int i = 3;
+		int j = 0;
 
 		//*/
 		int res = 0;
