@@ -30,6 +30,140 @@ public class Exo_v2 {
 		this.res_choisi= Integer.MIN_VALUE;
 	}
 	
+	
+	public Symmetry getCoordNextCoupe(int m,int n,int i,int j){
+		
+		int res=0,res1=0,res2=0;
+		int tmpI= -1;
+		int tmpJ= -1;
+		int tmpM= -1;
+		int tmpN= -1;
+		int maxNegativ = Integer.MIN_VALUE;
+		boolean hasNeg = false;
+		int maxPositiv = 0;
+		Symmetry s = new Symmetry(1,1,0,0);
+		Symmetry ss = new Symmetry(1,1,0,0);
+		Symmetry coordResPos = new Symmetry(1,1,0,0);
+		Symmetry coordResNeg = new Symmetry(1,1,0,0);
+		Symmetry coordRes    = new Symmetry(1,1,0,0);
+		
+
+		boolean valNeg = false;
+
+		ss.setSymmetry(m, n, i, j);
+		System.out.println(s);
+		ss.normalizedSymmetry();
+		System.out.println(s);
+		valNeg=(tabRes[Simulate4D.convert(ss.m,ss.n,ss.i,ss.j, m_initial, n_initial, m_initial)] > 0); 
+		System.out.println(valNeg+" "+tabRes[Simulate4D.convert(ss.m,ss.n,ss.i,ss.j, m_initial, n_initial, m_initial)]);
+		
+		for(int indice=1;indice<ss.m;indice++){
+			tmpI = ss.i;
+			tmpJ = ss.j;
+			tmpM = indice;
+			tmpN = indice;
+			
+			if (i>=indice){
+				tmpI = s.i - indice;
+				tmpM = s.m - indice;
+			}
+			
+			s.setSymmetry(tmpM,ss.n,tmpI,ss.j);
+			s.normalizedSymmetry();
+			
+			
+			if(!tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)])
+			{
+				System.out.println("ERROR FATALE");
+			}
+			else
+				res1 = tabRes[Simulate4D.convert(s.m,s.n,s.i,s.j, m_initial, n_initial, m_initial)]; //O(1)
+			
+			
+			if (res1<1)
+			{
+				hasNeg = true;
+				//maxNegativ = Math.max(maxNegativ, res1); //O(1)
+				if(maxNegativ<res1)
+				{
+					maxNegativ = res1;
+					coordResNeg.setSymmetry(s);
+				}
+			}
+			else{
+				maxPositiv = Math.max(maxPositiv, res1);
+				if(maxPositiv<res1)
+				{
+					maxPositiv = res1;
+					coordResPos.setSymmetry(s);
+				}
+			}
+		}
+		
+		for(int indice=1;indice<ss.n;indice++){
+			tmpI = ss.i;
+			tmpJ = ss.j;
+			tmpM = indice;
+			tmpN = indice;
+			
+			if(j>= indice){	
+				tmpJ = ss.j - indice;
+				tmpN = ss.n - indice;
+			}
+			s.setSymmetry(ss.m,tmpN,ss.i,tmpJ);
+			s.normalizedSymmetry();
+			
+			
+			if(!tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)])
+			{
+				System.out.println("FATALE ERROR NUMBER 2");
+			}
+			else
+				res2 = tabRes[Simulate4D.convert(s.m,s.n,s.i,s.j, m_initial, n_initial, m_initial)]; //O(1)
+			
+			if (res2<1)
+			{
+				hasNeg = true;
+				//maxNegativ = Math.max(maxNegativ, res2);
+				if(maxNegativ<res2)
+				{
+					maxNegativ = res2;
+					coordResNeg.setSymmetry(s);
+				}
+			}
+			else{
+				//maxPositiv = Math.max(maxPositiv, res2);
+				if(maxPositiv<res2)
+				{
+					maxPositiv = res2;
+					coordResPos.setSymmetry(s);
+				}
+			}
+		}
+		
+		if(valNeg){
+			System.out.println(coordResNeg+"neg");
+			System.out.println(coordResPos+"pos");
+			if (!hasNeg){
+				coordRes.setSymmetry(coordResNeg);
+			}
+			else{
+				coordRes.setSymmetry(coordResPos);
+			}
+		}else{
+			if (hasNeg){
+				coordRes.setSymmetry(coordResNeg);
+			}
+			else{
+				coordRes.setSymmetry(coordResPos);
+			}
+		}
+		return coordRes;
+		
+	}
+	
+	
+	
 	/**
 	 * calcul de la valeur d'une position
 	 * 
@@ -184,11 +318,11 @@ public class Exo_v2 {
 		
 		if(symmetry){
 			s.normalizedSymmetry();
-			System.out.println(s);
+			//System.out.println(s);
 			int mm = (s.m);
 			int nn = (s.n);
 			sizetab = mm+nn+(mm + mm*nn + mm*nn*mm + mm*nn*mm*nn)/2;
-			System.out.println("sizetab:"+sizetab);
+			//System.out.println("sizetab:"+sizetab);
 		}
 		
 		if(tabChecked==null || tabChecked.length!=sizetab)
