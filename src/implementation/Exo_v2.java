@@ -12,6 +12,12 @@ public class Exo_v2 {
 	public int n_initial;
 	public boolean DEBUG;
 	
+	//variable used for the game
+	public int m_choisi;
+	public int n_choisi;
+	public int res_choisi;
+	
+	
 	public Exo_v2()
 	{
 		this(false);
@@ -20,6 +26,8 @@ public class Exo_v2 {
 	{
 		this.DEBUG=debug;
 		this.tabRes = null;
+		
+		this.res_choisi= Integer.MIN_VALUE;
 	}
 	
 	/**
@@ -33,9 +41,10 @@ public class Exo_v2 {
 	 * @param recursion_lvl profondeur de l'appel recursif
 	 * @param dp flag qui indique si on utilise la prog dynamique ou non
 	 * @param symmetry flag qui indique si on utilise la symmetry ou non
+	 * @param game flag qui indique si on est dans le jeu
 	 * @return
 	 */
-	public int f(int m,int n,int i,int j,boolean resetCounter, int recursion_lvl, boolean dp, boolean symmetry)
+	public int f(int m,int n,int i,int j,boolean resetCounter, int recursion_lvl, boolean dp, boolean symmetry, boolean game)
 	{
 		if(resetCounter)
 			this.compteurAppel=0;
@@ -85,7 +94,7 @@ public class Exo_v2 {
 					
 					if(!tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)])
 					{
-						res1 = f(s.m, s.n, s.i, s.j,false,recursion_lvl+1,dp,symmetry);
+						res1 = f(s.m, s.n, s.i, s.j,false,recursion_lvl+1,dp,symmetry,game);
 						tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]=res1; //O(1) 
 						tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]=true; //O(1)
 					}
@@ -93,7 +102,7 @@ public class Exo_v2 {
 						res1 = tabRes[Simulate4D.convert(s.m,s.n,s.i,s.j, m_initial, n_initial, m_initial)]; //O(1)
 				}
 				else
-					res1 = f(s.m, s.n, s.i, s.j,false,recursion_lvl+1,dp,symmetry);
+					res1 = f(s.m, s.n, s.i, s.j,false,recursion_lvl+1,dp,symmetry,game);
 				
 				if (res1<1)
 				{
@@ -121,7 +130,7 @@ public class Exo_v2 {
 					
 					if(!tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)])
 					{
-						res2 = f(s.m, s.n, s.i, s.j,false,recursion_lvl+1,dp,symmetry);
+						res2 = f(s.m, s.n, s.i, s.j,false,recursion_lvl+1,dp,symmetry,game);
 						tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]=res2;
 						tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)]=true;
 					}
@@ -129,7 +138,7 @@ public class Exo_v2 {
 						res2 = tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)];
 				}
 				else
-					res2 = f(s.m, s.n, s.i, s.j,false,recursion_lvl+1,dp,symmetry);
+					res2 = f(s.m, s.n, s.i, s.j,false,recursion_lvl+1,dp,symmetry,game);
 				
 				if (res2<1)
 				{
@@ -162,10 +171,10 @@ public class Exo_v2 {
 	
 	public int f_naif(int m,int n,int i,int j)
 	{
-		return f(m,n,i,j,true,0,false,false);
+		return f(m,n,i,j,true,0,false,false,false);
 	}
 	
-	public int f_dp(int m,int n,int i,int j,boolean symmetry)
+	public int f_dp(int m,int n,int i,int j,boolean symmetry,boolean game)
 	{
 		int sizetab = m+m*n+m*n*m+m*n*m*n;
 		this.m_initial=m;
@@ -194,12 +203,12 @@ public class Exo_v2 {
 		}
 		tabChecked[Simulate4D.convert(1, 1, 0, 0, this.m_initial, this.n_initial, this.m_initial)]=true;
 		
-		return f(s.m,s.n,s.i,s.j,true,0,true,symmetry);
+		return f(s.m,s.n,s.i,s.j,true,0,true,symmetry,false);
 	}
 	
-	public int f_dp_naif(int m,int n,int i,int j)
+	public int f_dp_naif(int m,int n,int i,int j,boolean game)
 	{
-		int res = f_dp(m,n,i,j,false);
+		int res = f_dp(m,n,i,j,false,game);
 		int count = 0;
 		for(int p : tabRes)
 			count = (p!=0) ? count+1 : count;
@@ -207,14 +216,19 @@ public class Exo_v2 {
 		return res;
 	}
 	
-	public int f_dp_symmetry(int m,int n,int i,int j)
+	public int f_dp_symmetry(int m,int n,int i,int j,boolean game)
 	{
-		int res = f_dp(m,n,i,j,true);
+		int res = f_dp(m,n,i,j,true,game);
 		int count = 0;
 		for(int p : tabRes)
 			count = (p!=0) ? count+1 : count;
 		System.out.println(count+" "+tabRes.length+" "+(float)tabRes.length/count);
 		return res;
+	}
+	
+	public int f_game(int m,int n, int i, int j)
+	{
+		return f_dp_naif(m,n,i,j,true);
 	}
 	
 }
