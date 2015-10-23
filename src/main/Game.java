@@ -27,9 +27,9 @@ public class Game {
 		System.out.print("Longueur :");
 		while(m<=0){
 			if(scan.hasNextInt() && (m=scan.nextInt()) > 0){
-				System.out.println("Longueur initialisé ...");
+				System.out.println("Longueur initialisï¿½ ...");
 			}else{
-				System.out.println("Indiquez un entier supérieur à 0 ...");
+				System.out.println("Indiquez un entier supï¿½rieur ï¿½ 0 ...");
 				scan = new Scanner(System.in);
 			}
 		}
@@ -37,26 +37,26 @@ public class Game {
 		System.out.print("Largueur :");
 		while(n<=0){
 			if(scan.hasNextInt() && (n=scan.nextInt()) > 0){
-				System.out.println("Largueur initialisé ...");
+				System.out.println("Largueur initialisï¿½ ...");
 			}else{
-				System.out.println("Indiquez un entier supérieur à 0 ...");
+				System.out.println("Indiquez un entier supï¿½rieur ï¿½ 0 ...");
 				scan = new Scanner(System.in);
 			}
 		}
-		System.out.println("Initialisation du plateau terminé.");
+		System.out.println("Initialisation du plateau terminï¿½.");
 		
 		
 		
 		
 		//Placement du carre de la mort
-		System.out.println("Placement du carré de la mort ...");
+		System.out.println("Placement du carrï¿½ de la mort ...");
 		int i = new Random().nextInt(m);
 		int j = new Random().nextInt(n);
-		System.out.println("Carré de la mort placé en : ["+i+"|"+j+"] \n");
+		System.out.println("Carrï¿½ de la mort placï¿½ en : ["+i+"|"+j+"] \n");
 
 		
 		
-		System.out.println("Jeu prêt ! \n\n");
+		System.out.println("Jeu prï¿½t ! \n\n");
 		
 		
 		
@@ -75,7 +75,7 @@ public class Game {
 		//Deroulement de la partie
 		while(m>1 || n>1){
 			
-			System.out.println("Représentation du plateau de jeu");
+			System.out.println("Reprï¿½sentation du plateau de jeu");
 			representationPlateau(m,n,i,j);
 			
 			if(joueur)
@@ -84,9 +84,9 @@ public class Game {
 				joueurActuel=joueur2;
 
 			System.out.println("\n"+joueurActuel+" joue ...");
-			res = exo2.f_dp(m, n, i, j,true);
+			res = exo2.f_dp(m, n, i, j,true,false);
 			
-			
+	
 			
 			
 			if(res>0){//Gagnant
@@ -115,29 +115,29 @@ public class Game {
 				
 			
 			if(longueur){
-				System.out.println("Couper à partir de la colonne (inclu) :");
+				System.out.println("Couper ï¿½ partir de la colonne (inclu) :");
 				while(tmpNum<=0 || tmpNum>=m){
 					if(scan.hasNextInt() && (tmpNum=scan.nextInt()) > 0){
 						if(tmpNum < m)
 							System.out.println("On coupe ...");
 						else{
-							System.out.println("Indiquez un entier supérieur à 0 ... et inférieur à la longueur du tableau actuel "+m);
+							System.out.println("Indiquez un entier supï¿½rieur ï¿½ 0 ... et infï¿½rieur ï¿½ la longueur du tableau actuel "+m);
 						}
 					}else{
-						System.out.println("Indiquez un entier supérieur à 0 ... et inférieur à la longueur du tableau actuel "+m);
+						System.out.println("Indiquez un entier supï¿½rieur ï¿½ 0 ... et infï¿½rieur ï¿½ la longueur du tableau actuel "+m);
 					}
 				}
 			}else{
-				System.out.println("Couper à partir de la ligne (inclu) :");
+				System.out.println("Couper ï¿½ partir de la ligne (inclu) :");
 				while(tmpNum<=0 || tmpNum>=n){
 					if(scan.hasNextInt() && (tmpNum=scan.nextInt()) > 0){
 						if(tmpNum < n)
 							System.out.println("On coupe ...");
 						else{
-							System.out.println("Indiquez un entier supérieur à 0 ... et inférieur à la largueur du tableau actuel "+n);
+							System.out.println("Indiquez un entier supï¿½rieur ï¿½ 0 ... et infï¿½rieur ï¿½ la largueur du tableau actuel "+n);
 						}
 					}else{
-						System.out.println("Indiquez un entier supérieur à 0 ... et inférieur à la largueur du tableau actuel "+n);
+						System.out.println("Indiquez un entier supï¿½rieur ï¿½ 0 ... et infï¿½rieur ï¿½ la largueur du tableau actuel "+n);
 					}
 				}
 			}
@@ -161,12 +161,12 @@ public class Game {
 				}				
 			}
 			
-			System.out.println("Coupe terminé ... à l'adversaire ...");
+			System.out.println("Coupe terminï¿½ ... ï¿½ l'adversaire ...");
 			joueur=!joueur;
 			
 		}
 		
-		System.out.println("\n Félicitation le "+joueurActuel+" a gagné !");
+		System.out.println("\n Fï¿½licitation le "+joueurActuel+" a gagnï¿½ !");
 		
 		
 	}
