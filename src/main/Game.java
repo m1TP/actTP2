@@ -30,9 +30,9 @@ public class Game {
 		System.out.print("Longueur :");
 		while(m<=0){
 			if(scan.hasNextInt() && (m=scan.nextInt()) > 0){
-				System.out.println("Longueur initialis� ...");
+				System.out.println("Longueur initialise ...");
 			}else{
-				System.out.println("Indiquez un entier sup�rieur � 0 ...");
+				System.out.println("Indiquez un entier superieur a 0 ...");
 				scan = new Scanner(System.in);
 			}
 		}
@@ -40,29 +40,26 @@ public class Game {
 		System.out.print("Largueur :");
 		while(n<=0){
 			if(scan.hasNextInt() && (n=scan.nextInt()) > 0){
-				System.out.println("Largueur initialis� ...");
+				System.out.println("Largueur initialise ...");
 			}else{
-				System.out.println("Indiquez un entier sup�rieur � 0 ...");
+				System.out.println("Indiquez un entier superieur a 0 ...");
 				scan = new Scanner(System.in);
 			}
 		}
-		System.out.println("Initialisation du plateau termin�.");
-		
-		int m_init=m;
-		int n_init=n;
+		System.out.println("Initialisation du plateau termine.");
 		
 		
 		//Placement du carre de la mort
-		System.out.println("Placement du carr� de la mort ...");
-	//	int i = new Random().nextInt(m);
-	//	int j = new Random().nextInt(n);
-		int i=2;
-		int j=0;
-		System.out.println("Carr� de la mort plac� en : ["+i+"|"+j+"] \n");
+		System.out.println("Placement du carre de la mort ...");
+		int i = new Random().nextInt(m);
+		int j = new Random().nextInt(n);
+		//int i=2;
+		//int j=0;
+		System.out.println("Carre de la mort place en : ["+i+"|"+j+"] \n");
 
 		
 		
-		System.out.println("Jeu pr�t ! \n\n");
+		System.out.println("Jeu pret ! \n\n");
 		
 		
 		
@@ -77,12 +74,13 @@ public class Game {
 		String joueur2 = "Joueur 2";
 		String joueurActuel = "";
 		
-		
 		//Deroulement de la partie
 		while(m>1 || n>1){
 			
-			System.out.println("Repr�sentation du plateau de jeu");
+			System.out.println("Representation du plateau de jeu");
 			representationPlateau(m,n,i,j);
+			System.out.println("m: "+m+" n: "+n+" i: "+i+" j: "+j);
+			
 			
 			if(!joueur)
 				joueurActuel=joueur1;
@@ -121,34 +119,33 @@ public class Game {
 					
 				
 				if(longueur){
-					System.out.println("Couper � partir de la colonne (inclu) :");
+					System.out.println("Couper a partir de la colonne (inclu) :");
 					while(tmpNum<=0 || tmpNum>=m){
 						if(scan.hasNextInt() && (tmpNum=scan.nextInt()) > 0){
 							if(tmpNum < m)
 								System.out.println("On coupe ...");
 							else{
-								System.out.println("Indiquez un entier sup�rieur � 0 ... et inf�rieur � la longueur du tableau actuel "+m);
+								System.out.println("Indiquez un entier superieur a 0 ... et inferieur a la longueur du tableau actuel "+m);
 							}
 						}else{
-							System.out.println("Indiquez un entier sup�rieur � 0 ... et inf�rieur � la longueur du tableau actuel "+m);
+							System.out.println("Indiquez un entier superieur a 0 ... et inferieur a la longueur du tableau actuel "+m);
 							scan = new Scanner(System.in);
 						}
 					}
 				}else{
-					System.out.println("Couper � partir de la ligne (inclu) :");
+					System.out.println("Couper a partir de la ligne (inclu) :");
 					while(tmpNum<=0 || tmpNum>=n){
 						if(scan.hasNextInt() && (tmpNum=scan.nextInt()) > 0){
 							if(tmpNum < n)
 								System.out.println("On coupe ...");
 							else{
-								System.out.println("Indiquez un entier sup�rieur � 0 ... et inf�rieur � la largueur du tableau actuel "+n);
+								System.out.println("Indiquez un entier superieur a 0 ... et inferieur a la largueur du tableau actuel "+n);
 							}
 						}else{
-							System.out.println("Indiquez un entier sup�rieur � 0 ... et inf�rieur � la largueur du tableau actuel "+n);
+							System.out.println("Indiquez un entier superieur a 0 ... et inferieur a la largueur du tableau actuel "+n);
 							scan = new Scanner(System.in);
 							
 						}
-//>>>>>>> 98451e5e1e128ac62fdfb4708deff649d21c73b9
 					}
 				}
 				
@@ -173,21 +170,17 @@ public class Game {
 				
 				
 				//Tour ordinateur
-				System.out.println("L'ordinateur calcul la meilleure coupe � faire ...");
-				
-				/*for(int z=0;z<exo2.tabRes.length;z++){
-					System.out.println(exo2.tabRes.length+ " " +z+" "+exo2.tabRes[z]);
-				}*/
+				System.out.println("L'ordinateur calcul la meilleure coupe a faire ...");
 				
 				
 				//Recherche de la coupe a faire
 				boolean hasNeg = false;
 				int tmpM = 0;
-				int tmpMM = 0;
 				int tmpN = 0;
-				int tmpNN = 0;
 				int tmpI = 0;
 				int tmpJ = 0;
+				int tmpMM = 0;
+				int tmpNN = 0;
 				int maxPositiv = 0;
 				int maxNegativ = 0;
 				Symmetry s = new Symmetry(1,1,0,0);
@@ -196,99 +189,99 @@ public class Game {
 					hasNeg=true;
 				}
 				
-				for(int k=0;k<m;k++){
-					if(i>= k){	
-						tmpI = i - k;
-						tmpM = m - k;
+				for(int k=1;k<m;k++){
+					
+					if(m>1 || n>1 || i>0 || j>0){
+						if(i>= k){	
+							tmpI = i - k;
+							tmpM = m - k;
+						}else{
+							tmpI = i;
+							tmpM = k;
+						}
+						
+						s.setSymmetry(tmpM,n,tmpI,j);
+						s.normalizedSymmetry();
 					}
 					
-					s.setSymmetry(tmpM,n,tmpI,j);
-					s.normalizedSymmetry();
 					
-					if(hasNeg){
-						//if(Simulate4D.convert(s.m, s.n, s.i, s.j, m_init, n_init, m_init)<exo2.tabRes.length)
-							if(exo2.tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_init, n_init, m_init)]<maxNegativ){
-								System.out.println("coucou tu veux voir mes bytes ! 3");
-								System.out.println("Trouv� ! en neg"+" m ="+s.m+" i ="+s.i);
-								maxNegativ=exo2.tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_init, n_init, m_init)];
+					if(tmpM==1 && n==1 && tmpI==0 && j==0){//Condition de sortie
+						m=1;n=1;i=0;j=0;tmpMM=0;tmpNN=0;
+					}else{
+						
+						if(hasNeg){
+							if(exo2.tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m, n, m)]<maxNegativ){
+								maxNegativ=exo2.tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m, n, m)];
 								tmpMM=tmpM;
 							}		
-					}else{
-						//if(Simulate4D.convert(s.m, s.n, s.i, s.j, m_init, n_init, m_init)<exo2.tabRes.length)
-						System.out.println(exo2.tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_init, n_init, m_init)]);
-							if(exo2.tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_init, n_init, m_init)]>maxPositiv){
-							//System.out.println("Trouv� ! en neg"+" m ="+k+" n ="+l+" i ="+p+" j ="+q);
-								System.out.println("coucou tu veux voir mes bytes ! 4");
-								System.out.println("Trouv� ! en pos"+" m ="+s.m+" i ="+s.i+" res ="+exo2.tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_init, n_init, m_init)]);
-								maxPositiv=exo2.tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_init, n_init, m_init)];
-								System.out.println("tmpM "+tmpM);
+						}else{
+							if(exo2.tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m, n, m)]>maxPositiv){
+								maxPositiv=exo2.tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m, n, m)];
 								tmpMM=tmpM;
 							}
+						}
 					}
 				}
 					
-				for(int k=0;k<n;k++){
-					if(j>= k){	
-						tmpJ = j - k;
-						tmpN = n - k;
+				for(int k=1;k<n;k++){
+					if(m>1 || n>1 || i>0 || j>0){
+						if(j>= k){	
+							tmpJ = j - k;
+							tmpN = n - k;
+						}else{
+							tmpJ = j;
+							tmpN = k;
+						}
+						
+						s.setSymmetry(m,tmpN,i,tmpJ);
+						s.normalizedSymmetry();
 					}
 					
-					s.setSymmetry(m,tmpN,i,tmpJ);
-					s.normalizedSymmetry();
-					
-					if(hasNeg){
-							if(exo2.tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_init, n_init, m_init)]<maxNegativ){
-								//System.out.println("Trouv� ! en neg"+" m ="+k+" n ="+l+" i ="+p+" j ="+q);
-								System.out.println("coucou tu veux voir mes bytes ! 2");
-								maxNegativ=exo2.tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_init, n_init, m_init)];
-								tmpNN=tmpN;
-							}		
+					if(m==1 && tmpN==1 && i==0 && tmpJ==0){//Condition de sortie
+						m=1;n=1;i=0;j=0;tmpMM=0;tmpNN=0;
 					}else{
-						System.out.println(exo2.tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_init, n_init, m_init)]);
-							if(exo2.tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_init, n_init, m_init)]>maxPositiv){
-							//System.out.println("Trouv� ! en neg"+" m ="+k+" n ="+l+" i ="+p+" j ="+q);
-								System.out.println("coucou tu veux voir mes bytes !");
-								maxPositiv=exo2.tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m_init, n_init, m_init)];
-								tmpNN=tmpN;
-							}
+						if(hasNeg){
+								if(exo2.tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m, n, m)]<maxNegativ){
+									maxNegativ=exo2.tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m, n, m)];
+									tmpNN=tmpN;
+								}		
+						}else{
+								if(exo2.tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m, n, m)]>maxPositiv){
+									maxPositiv=exo2.tabRes[Simulate4D.convert(s.m, s.n, s.i, s.j, m, n, m)];
+									tmpNN=tmpN;
+								}
+						}
 					}
 				}				
 							
-						
-				System.out.println(tmpM+" "+tmpN+" "+tmpI+" "+tmpJ);
 				
 				//Coupe
 				if(tmpMM>0){
 					if(tmpI<i){//Coupe a gauche
-						System.out.println('g');
 						i=i-(m-tmpMM);
+						tmpI=i;
 						m=tmpMM;
 					}else{//Coupe a droite
-						System.out.println('d');
 						m=tmpMM;
 					}
 				}else if(tmpNN>0){
 					if(tmpJ<j){//Coupe en haut
-						System.out.println('h');
 						j=j-(n-tmpNN);
+						tmpJ=j;
 						n=tmpNN;
 					}else{//Coupe en bas
-						System.out.println('b');
 						n=tmpNN;
-						j=tmpJ;
 					}				
-				}else{
-					m=1;n=1;i=0;j=0;
 				}
 				
 			}
 
 			
-			System.out.println("Coupe termin� ... � l'adversaire ...");
+			System.out.println("Coupe termine ... a l'adversaire ...");
 			joueur=!joueur;
 			
 		}
-		System.out.println("\n F�licitation le "+joueurActuel+" a gagn� !");
+		System.out.println("\n Felicitation le "+joueurActuel+" a gagne !");
 	}
 	
 	public static void representationPlateau(int m, int n, int i, int j){
