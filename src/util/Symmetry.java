@@ -49,8 +49,6 @@ public class Symmetry {
 			jj = this.i;
 		}
 		
-		//on profite du fait que la division des entiers en java retourn un entier
-		//cela evite d'utiliser Math.ceil(), très couteux
 		
 		if(ii>=mm/2)
 			ii = mm-1-ii;

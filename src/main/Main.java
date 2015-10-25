@@ -22,10 +22,12 @@ public class Main {
 		Exo_v2 exo2 = new Exo_v2();
 		
 
-		int m = 4;
-		int n = 4;
-		int i = 0;
-		int j = 0;
+
+		int m = 10;
+		int n = 7;
+		int i = 5;
+		int j = 3;
+
 
 		//*/
 		int res = 0;
@@ -36,7 +38,7 @@ public class Main {
 		
 		long startTime = System.currentTimeMillis();
 		
-		res = exo2.f_dp_symmetry(m, n, i, j);
+		//res = exo2.f_dp_naif(m, n, i, j,false);
 		System.out.println("res: "+ res+" en "+exo2.compteurAppel+" appels récursifs");
 		
 		long endTime = System.currentTimeMillis();;
@@ -44,8 +46,9 @@ public class Main {
 		long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds
 		System.out.println((float)duration/1000+"s");
 		
+		
 		startTime = System.currentTimeMillis();
-		res = exo2.f_dp_naif(m, n, i, j);
+		//res = exo2.f_dp_symmetry(m, n, i, j,false);
 		System.out.println("res: "+ res+" en "+exo2.compteurAppel+" appels récursifs");
 
 		endTime = System.currentTimeMillis();;
