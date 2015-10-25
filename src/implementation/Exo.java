@@ -267,7 +267,7 @@ public class Exo {
 			}
 			
 			Symmetry s = new Symmetry(tmpM,n,tmpI,tmpJ);
-			s = s.normalizedSymmetry();
+			s.normalizedSymmetry();
 			if(!tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)])
 			{
 				res = f_dp_symmetry(s.m, s.n, s.i, s.j,false);
@@ -300,7 +300,7 @@ public class Exo {
 			}
 			
 			Symmetry s = new Symmetry(m,tmpN,tmpI,tmpJ);
-			s = s.normalizedSymmetry();
+			s.normalizedSymmetry();
 			if(!tabChecked[Simulate4D.convert(s.m, s.n, s.i, s.j, m_initial, n_initial, m_initial)])
 			{
 				res = f_dp_symmetry(s.m, s.n, s.i, s.j,false);
